@@ -1,0 +1,161 @@
+body {
+  background-color: black;
+  color: white;
+}
+
+.space {
+    font-size: .8rem;
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    z-index: -1;
+    transition-duration: 0ms !important;
+    opacity: 1 !important;
+    &::after {
+      content: "";
+      position: absolute;
+      top: 20%;
+      left: 50%;      
+      width: 0.24em;
+      height: 0.24em;
+      box-shadow: 24vmax 22vmax 0 -0.03em, -59vmax -25vmax 0 -0.06em, 4vmax -63vmax 0 -0.03em, -38vmax 15vmax 0 -0.03em, -28vmax 65vmax 0 -0.09em, -25vmax 35vmax 0 -0.03em, -43vmax 11vmax 0 -0.03em, -54vmax -37vmax 0 -0.06em, -13vmax 72vmax 0 0em, -5vmax -30vmax 0 -0.06em, -25vmax -5vmax 0 -0.06em, 3vmax -2vmax 0 -0.06em, 10vmax -78vmax 0 0em, 28vmax 9vmax 0 0em, 21vmax 89vmax 0 -0.03em, -42vmax -52vmax 0 0em, 68vmax 64vmax 0 -0.09em, -22vmax -1vmax 0 0em, 1vmax -21vmax 0 -0.03em, 46vmax -34vmax 0 -0.09em, -41vmax -65vmax 0 -0.09em, 23vmax 12vmax 0 -0.06em, -30vmax 30vmax 0 0em, 18vmax -15vmax 0 -0.03em, 20vmax 6vmax 0 0em, 6vmax 7vmax 0 0em, -18vmax 58vmax 0 -0.06em, 7vmax 14vmax 0 -0.09em, 27vmax -32vmax 0 -0.09em, -33vmax -29vmax 0 0em, 24vmax 17vmax 0 -0.09em, -68vmax 40vmax 0 0em, 26vmax 25vmax 0 0em, 4vmax -47vmax 0 -0.09em, -30vmax 29vmax 0 -0.06em, 4vmax 72vmax 0 -0.03em, 11vmax 33vmax 0 -0.09em, 12vmax -68vmax 0 -0.06em, -18vmax 40vmax 0 -0.03em, 27vmax -6vmax 0 0em, 23vmax -32vmax 0 -0.06em, 40vmax -15vmax 0 0em, 49vmax 29vmax 0 -0.03em, -16vmax -62vmax 0 -0.03em, 11vmax 16vmax 0 -0.03em, -51vmax 13vmax 0 -0.06em, 6vmax 93vmax 0 -0.03em, -2vmax -23vmax 0 0em, 8vmax -61vmax 0 -0.09em, -22vmax -43vmax 0 0em, 10vmax 23vmax 0 -0.06em, -18vmax -6vmax 0 -0.03em, -80vmax 52vmax 0 0em, -9vmax 24vmax 0 -0.06em, -63vmax 6vmax 0 -0.09em, -45vmax 24vmax 0 -0.09em, 13vmax -6vmax 0 -0.09em, -44vmax -24vmax 0 0em, 61vmax 4vmax 0 -0.09em, 32vmax -38vmax 0 -0.03em, 27vmax -21vmax 0 -0.09em, -20vmax 15vmax 0 -0.03em, -19vmax 3vmax 0 0em, 12vmax 86vmax 0 -0.06em, -64vmax -10vmax 0 -0.09em, -10vmax 53vmax 0 -0.06em, 33vmax 57vmax 0 -0.06em, 20vmax 36vmax 0 -0.09em, -54vmax 21vmax 0 -0.09em, -25vmax -37vmax 0 -0.09em, 42vmax -42vmax 0 -0.06em, 27vmax -1vmax 0 0em, 14vmax 26vmax 0 -0.09em, -47vmax 27vmax 0 0em, -87vmax 35vmax 0 -0.03em, -43vmax -6vmax 0 0em, -20vmax -8vmax 0 -0.09em, 39vmax -74vmax 0 -0.03em, -76vmax -73vmax 0 -0.09em, -2vmax 54vmax 0 -0.06em, 31vmax -6vmax 0 0em, -90vmax -8vmax 0 -0.06em, 29vmax -39vmax 0 -0.06em, -65vmax -21vmax 0 -0.09em, -35vmax 32vmax 0 0em, -5vmax -54vmax 0 -0.09em, -17vmax -63vmax 0 0em, 48vmax 42vmax 0 -0.06em, -28vmax -9vmax 0 0em, 33vmax 29vmax 0 -0.03em, -43vmax -14vmax 0 0em, 34vmax 13vmax 0 -0.06em, -64vmax 17vmax 0 -0.03em, 21vmax -36vmax 0 -0.03em, -14vmax 39vmax 0 -0.09em, -8vmax 46vmax 0 0em, 11vmax 23vmax 0 -0.06em, -21vmax 6vmax 0 -0.06em, 20vmax 30vmax 0 -0.03em, 62vmax -71vmax 0 -0.03em;
+      border-radius: 50%;
+      color: #f2f2f2;
+      will-change: opacity, transform;
+      -webkit-transform: rotate(360deg);
+              transform: rotate(360deg);
+      -webkit-animation: rolling infinite 360s linear;
+              animation: rolling infinite 360s linear;
+  }
+}
+
+@-webkit-keyframes rolling {
+  to {
+      -webkit-transform: rotate(0);
+              transform: rotate(0);
+  }
+  }
+  @keyframes rolling {
+  to {
+      -webkit-transform: rotate(0);
+              transform: rotate(0);
+  }
+}
+.btn-magic {
+  background-color: black;
+  color: white;
+  padding: 16px 32px;
+  border: none;
+  cursor: pointer;
+  font-weight: bold;
+  font-size: 24px;
+  border-radius: 12px;
+  position: relative;
+}
+
+.btn-magic::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  z-index: -1;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(45deg, red, blue, deeppink, blue, red, blue, deeppink, blue);
+  background-size: 800%;
+  border-radius: 10px;
+  filter: blur(8px);
+  animation: glowing 20s linear infinite;
+}
+
+@keyframes glowing { 
+  0% {
+      background-position: 0 0;
+  }
+  50% {
+      background-position: 400% 0;
+  }
+  100% {
+      background-position: 0 0;
+  }
+}
+
+
+#box {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 20px;
+  background: #fff;
+  width: 0.3em;
+  height: 0.3em;
+  border-radius: 10em;
+  box-shadow: 0 1px 3px 1px rgba(0, 0, 0, 0.25);
+  cursor: pointer;
+  transition: box-shadow 250ms ease-in-out;
+
+  &:hover {
+      box-shadow: 0 1px 3px 1px rgba(0, 0, 0, 0.1);
+
+      &:before {
+      width: 100%;
+      height: 100%;
+      filter: blur(0.5em);
+      opacity: 1;
+      }
+  }
+
+  &:before {
+      content: "";
+      opacity: 0;
+      position: absolute;
+      left: 0;
+      top: 0;
+      background: linear-gradient(
+      45deg,
+      #fb0094,
+      #0000ff,
+      #00ff00,
+      #ffff00,
+      #ff0000
+      );
+      background-size: 200%;
+      width: 100%;
+      height: 100%;
+      border-radius: 10em;
+      z-index: -1;
+      animation: ai-button-glow 5s linear infinite;
+      transition: filter 250ms ease-in-out, opacity 250ms ease-in-out;
+  }
+}
+
+@keyframes ai-button-glow {
+  0% {
+      background-position: 0 0;
+  }
+
+  50% {
+      background-position: 200% 0;
+  }
+
+  100% {
+      background-position: 0 0;
+  }
+}
+
+@keyframes pulse {
+  0% {
+      filter: blur(0);
+  }
+
+  50% {
+      filter: blur(0.5em);
+  }
+
+  100% {
+      filter: blur(0);
+  }
+}

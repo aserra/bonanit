@@ -1,0 +1,16 @@
+[
+  { "nombre": "Draco", "personaje": "dragón", "rol": "protector" },
+  { "nombre": "Max", "personaje": "perro", "rol": "leal" },
+  { "nombre": "Félix", "personaje": "gato", "rol": "curioso" },
+  { "nombre": "Remi", "personaje": "ratón", "rol": "astuto" },
+  { "nombre": "Leo", "personaje": "león", "rol": "valiente" },
+  { "nombre": "Zara", "personaje": "zorro", "rol": "astuto" },
+  { "nombre": "Eli", "personaje": "elefante", "rol": "sabio" },
+  { "nombre": "Conejín", "personaje": "conejo", "rol": "rápido" },
+  { "nombre": "Bruno", "personaje": "oso", "rol": "fuerte" },
+  { "nombre": "Sigilo", "personaje": "serpiente", "rol": "engañosa" },
+  { "nombre": "Águila", "personaje": "águila", "rol": "vigilante" },
+  { "nombre": "Carracosta", "personaje": "tortuga", "rol": "paciente" },
+  { "nombre": "Estrella", "personaje": "caballo", "rol": "noble" },
+  { "nombre": "Colmillo", "personaje": "lobo", "rol": "solitario" }
+]
