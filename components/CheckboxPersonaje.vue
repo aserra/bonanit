@@ -7,7 +7,8 @@ const props = defineProps({
   id: {
     type: String,
     required: true
-  }
+  },
+  personaje: Object
 });
 
 const emits = defineEmits(['update:modelValue']);
@@ -26,7 +27,7 @@ const updateValue = () => {
   <div 
     class="checkbox relative overflow-hidden rounded-md transition duration-300 ease-in-out border border-white"
     :class="{'bg-white text-slate-800 shadow-md shadow-slate-500': checked, '': !checked}"
-  >
+    >
     <input 
       type="checkbox" 
       :id="id" 
@@ -38,7 +39,10 @@ const updateValue = () => {
       :for="id" 
       class="flex flex-col capitalize px-4 py-2 cursor-pointer"
     >
-      <slot></slot>
+        <slot>
+          <span>{{ personaje.personaje }}</span>
+          <small class="italic">({{ personaje.nombre }}, {{ personaje.rol }})</small>
+        </slot>
     </label>
   </div>
 </template>

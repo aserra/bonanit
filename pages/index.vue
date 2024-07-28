@@ -1,6 +1,7 @@
 <script setup>
 import { ref } from 'vue';
 import personajesData from '~/assets/personajes.json'; // Importa el JSON directament
+import CheckboxPersonaje from '~/components/CheckboxPersonaje.vue';
 
 const text = ref('');
 
@@ -87,41 +88,46 @@ const handleSubmit = async (event) => {
 </script>
 
 <template>
-  <div class="max-w-xl mx-auto py-20">
+  <div class="max-w-xl mx-auto py-4 px-4">
     <form @submit="handleSubmit">
-      <h1 class="pb-4 text-xl font-bold text-white-900 md:text-xl">
+
+      <h1 class="pb-6 text-xl font-bold text-white-900 md:text-xl">
         Buenas noches <em>baby</em>!
       </h1>
       
-      <fieldset class="mb-3">
-        <legend class="text-lg font-bold">Personajes</legend>
-        <div v-for="personaje in personajesData" :key="personaje.nombre">
-          <Checkbox v-model="personajes[personaje.nombre.toLowerCase()]" :id="personaje.nombre.toLowerCase()">
-            {{ personaje.nombre }} ({{ personaje.personaje }}, {{ personaje.rol }})
-          </Checkbox>
+      <fieldset class="mb-6 pt-3">
+        <legend class="text-slate-200 font-semibold">Personajes</legend>
+        <div id="chars__list" class="grid grid-cols-2 md:grid-cols-3 gap-3">
+            <CheckboxPersonaje v-for="personaje in personajesData" :key="personaje.nombre" v-model="personajes[personaje.nombre.toLowerCase()]" :id="personaje.nombre.toLowerCase()" :personaje="personaje" />
         </div>
       </fieldset>
       
-      <fieldset class="mb-3">
-        <legend class="text-lg font-bold">Moraleja</legend>
-        <Checkbox v-model="moralejas.envidia" id="envidia">Envidia</Checkbox>
-        <Checkbox v-model="moralejas.soberbia" id="soberbia">Soberbia</Checkbox>
-        <Checkbox v-model="moralejas.pereza" id="pereza">Pereza</Checkbox>
-        <Checkbox v-model="moralejas.avaricia" id="avaricia">Avaricia</Checkbox>
-        <Checkbox v-model="moralejas.lujuria" id="lujuria">Lujuria</Checkbox>
+      <fieldset class="mb-6 pt-3">
+        <legend class="text-slate-200 font-semibold">Moraleja</legend>
+        <div class="grid grid-cols-3 gap-3">
+          <Checkbox v-model="moralejas.envidia" id="envidia">Envidia</Checkbox>
+          <Checkbox v-model="moralejas.soberbia" id="soberbia">Soberbia</Checkbox>
+          <Checkbox v-model="moralejas.pereza" id="pereza">Pereza</Checkbox>
+          <Checkbox v-model="moralejas.avaricia" id="avaricia">Avaricia</Checkbox>
+          <Checkbox v-model="moralejas.lujuria" id="lujuria">Lujuria</Checkbox>
+        </div>
       </fieldset>
 
-      <fieldset class="mb-3">
-        <legend class="text-lg font-bold">Estilo</legend>
-        <Checkbox v-model="estilos.disney" id="disney">Disney</Checkbox>
-        <Checkbox v-model="estilos.larryDavid" id="larryDavid">Larry David</Checkbox>
-        <Checkbox v-model="estilos.mrBean" id="mrBean">Mr Bean</Checkbox>
+      <fieldset class="mb-6 pt-3">
+        <legend class="text-slate-200 font-semibold">Estilo</legend>
+        <div class="grid grid-cols-3 gap-3">
+          <Checkbox v-model="estilos.disney" id="disney">Disney</Checkbox>
+          <Checkbox v-model="estilos.larryDavid" id="larryDavid">Larry David</Checkbox>
+          <Checkbox v-model="estilos.verso" id="verso">En Verso</Checkbox>
+        </div>
       </fieldset>
 
-      <hr class="my-4 border-none" />
-      <button type="submit" class="btn-magic">
-        Haz un cuento!
-      </button>
+      <hr class="my-5 border-none" />
+      <div class="text-center">
+        <button type="submit" class="btn-magic">
+          Haz un cuento!
+        </button>
+      </div>
     </form>
     <section id="response" v-if="text">
       <h5 class="text-lg font-bold">Response:</h5>
