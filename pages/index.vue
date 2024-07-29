@@ -3,7 +3,7 @@ import { ref } from 'vue';
 import personajesData from '~/assets/personajes.json'; // Importa el JSON directament
 import CheckboxPersonaje from '~/components/CheckboxPersonaje.vue';
 
-const text = ref('');
+const text = ref("");
 
 const personajes = ref(
   personajesData.reduce((acc, curr) => {
@@ -89,7 +89,7 @@ const handleSubmit = async (event) => {
 
 <template>
   <div class="max-w-xl mx-auto py-4 px-4">
-    <form @submit="handleSubmit">
+    <form v-if="!text" @submit="handleSubmit">
 
       <h1 class="pb-6 text-xl font-bold text-white-900 md:text-xl">
         Buenas noches <em>baby</em>!
@@ -130,8 +130,12 @@ const handleSubmit = async (event) => {
       </div>
     </form>
     <section id="response" v-if="text">
-      <h5 class="text-lg font-bold">Response:</h5>
-      <pre class="bg-red">{{ text }}</pre>
+      <div class="playwrite whitespace-pre-line leading-6 break-words">{{ text }}</div>
+      <div class="text-center mt-12">
+        <button @click="text = ''" class="btn-magic">
+          &larr; Volver a empezar
+        </button>
+      </div>
     </section>
   </div>
 </template>

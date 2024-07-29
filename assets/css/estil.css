@@ -3,6 +3,9 @@ body {
   color: white;
 }
 
+.playwrite {
+  font-family: "Playwrite AR", cursive;
+}
 .space {
     font-size: .8rem;
     position: fixed;
@@ -83,6 +86,9 @@ body {
   }
 }
 
+#response {
+  
+}
 
 #box {
   position: relative;
