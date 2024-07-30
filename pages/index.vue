@@ -1,18 +1,19 @@
 <script setup>
-import { ref } from 'vue';
-import personajesData from '~/assets/personajes.json'; // Importa el JSON directament
+import { reactive, ref } from 'vue';
+import personajesJSON from '~/assets/personajes.json'; // Importa el JSON directament
 import CheckboxPersonaje from '~/components/CheckboxPersonaje.vue';
 
 const text = ref("");
+const personajesData = ref(personajesJSON);
 
 const personajes = ref(
-  personajesData.reduce((acc, curr) => {
-    acc[curr.nombre.toLowerCase()] = false;
+  personajesData.value.reduce((acc, curr) => {
+    acc[curr.personaje] = false;
     return acc;
   }, {})
 );
 
-const moralejas = ref({
+const moralejas = reactive({
   envidia: false,
   soberbia: false,
   pereza: false,
@@ -20,7 +21,7 @@ const moralejas = ref({
   lujuria: false
 });
 
-const estilos = ref({
+const estilos = reactive({
   disney: false,
   larryDavid: false,
   mrBean: false
@@ -43,16 +44,28 @@ const handleSubmit = async (event) => {
   console.log('handleSubmit');
   event.preventDefault();
 
-  const selectedPersonajes = personajesData.filter(
-    personaje => personajes.value[personaje.nombre.toLowerCase()]
+  /*
+  const selectedPersonajes = personajesData.value.filter(
+    personaje => personajes[personaje.personaje]
+  );
+  */
+
+ var selectedPersonajes = [];
+  
+  for (const personaje in personajes.value) {
+    console.log('personaje', personaje, personajes[personaje]);
+    if (personajes.value[personaje]) {
+      const index = personajesData.value.findIndex(p => p.personaje === personaje);
+      selectedPersonajes.push(personajesData.value[index]);
+    }
+  } 
+
+  const selectedMoralejas = Object.keys(moralejas).filter(
+    key => moralejas[key]
   );
 
-  const selectedMoralejas = Object.keys(moralejas.value).filter(
-    key => moralejas.value[key]
-  );
-
-  const selectedEstilos = Object.keys(estilos.value).filter(
-    key => estilos.value[key]
+  const selectedEstilos = Object.keys(estilos).filter(
+    key => estilos[key]
   );
 
   const response = await fetch('/api/story', {
@@ -85,12 +98,22 @@ const handleSubmit = async (event) => {
     text.value += streamDecoder(chunk);
   }
 };
+
+const updateName = ( personaje, newName ) => {
+  console.log('updateName', personaje, newName);
+  const index = personajesData.value.findIndex(p => p.personaje === personaje);
+  console.log('index', index);
+  if (index !== -1) {
+    personajesData.value[index].nombre = newName;
+  }
+};
+
+
 </script>
 
 <template>
   <div class="max-w-xl mx-auto py-4 px-4">
-    <form v-if="!text" @submit="handleSubmit">
-
+    <section v-if="!text">
       <h1 class="pb-6 text-xl font-bold text-white-900 md:text-xl">
         Buenas noches <em>baby</em>!
       </h1>
@@ -98,7 +121,7 @@ const handleSubmit = async (event) => {
       <fieldset class="mb-6 pt-3">
         <legend class="text-slate-200 font-semibold">Personajes</legend>
         <div id="chars__list" class="grid grid-cols-2 md:grid-cols-3 gap-3">
-            <CheckboxPersonaje v-for="personaje in personajesData" :key="personaje.nombre" v-model="personajes[personaje.nombre.toLowerCase()]" :id="personaje.nombre.toLowerCase()" :personaje="personaje" />
+            <CheckboxPersonaje v-for="personaje in personajesData" :key="personaje.personaje" v-model="personajes[personaje.personaje]" :id="personaje.personaje" :personaje="personaje" @update:name="updateName" />
         </div>
       </fieldset>
       
@@ -124,16 +147,16 @@ const handleSubmit = async (event) => {
 
       <hr class="my-5 border-none" />
       <div class="text-center">
-        <button type="submit" class="btn-magic">
-          Haz un cuento!
+        <button @click="handleSubmit" class="btn-magic">
+          {{ $t('Haz un cuento') }}!
         </button>
       </div>
-    </form>
+    </section>
     <section id="response" v-if="text">
       <div class="playwrite whitespace-pre-line leading-6 break-words">{{ text }}</div>
       <div class="text-center mt-12">
         <button @click="text = ''" class="btn-magic">
-          &larr; Volver a empezar
+          &larr; {{ $t('Volver a empezar') }}
         </button>
       </div>
     </section>

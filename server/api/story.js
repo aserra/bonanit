@@ -3,6 +3,7 @@ import { createOpenAI } from '@ai-sdk/openai';
 
 export default defineLazyEventHandler(async () => {
   const apiKey = useRuntimeConfig().openaiApiKey;
+  const isDebug = useRuntimeConfig().isDebug;
   if (!apiKey) throw new Error('Missing OpenAI API key');
   const openai = createOpenAI({
     apiKey: apiKey,
@@ -15,7 +16,7 @@ export default defineLazyEventHandler(async () => {
     // Extract parameters from the body
     const { personajes, moralejas, estilos } = body;
     console.log(personajes);
-    
+
     const language = 'Spanish';
 
     // Construct the prompt using the extracted parameters
@@ -23,12 +24,13 @@ export default defineLazyEventHandler(async () => {
     const selectedMoralejas = moralejas.join(', ');
     const selectedEstilos = estilos.join(', ');
 
-    console.log('DEBUG - Story request:', useRuntimeConfig().isDebug);
+    console.log('DEBUG - Story request:', isDebug);
     console.log(`language: ${language}`);
     console.log(`personajes: ${selectedPersonajes}`);
     console.log(`moralejas: ${selectedMoralejas}`);
     console.log(`estilos: ${selectedEstilos}`);
 
+    /*
     const prompt = `
     Cada noche le cuento a mi hija un cuento antes de dormir.
     Escríbeme una historia corta para niños en ${ language }
@@ -44,6 +46,11 @@ export default defineLazyEventHandler(async () => {
     La historia debe ser escrita en un lenguaje sencillo y fácil de entender.
     La historia debe ser escrita en un lenguaje amigable y cercano.
     La historia debe ser escrita en un lenguaje que fomente la imaginación y la creatividad.
+    `;
+    */
+    const prompt = `Haz una frase con los siguientes personajes:  ${selectedPersonajes}.
+    La moraleja del cuento debe ser sobre: ${selectedMoralejas}.
+    El estilo del cuento debe ser similar a: ${selectedEstilos}.
     `;
 
     // Ask OpenAI for a streaming chat completion given the prompt
