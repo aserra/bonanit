@@ -24,8 +24,10 @@ const moralejas = reactive({
 const estilos = reactive({
   disney: false,
   larryDavid: false,
-  mrBean: false
+  friends: false
 });
+
+const isLoading = ref(false);
 
 const streamDecoder = (encoded) => {
   const regex = /"([^"]*)"/g;
@@ -43,6 +45,7 @@ const streamDecoder = (encoded) => {
 const handleSubmit = async (event) => {
   console.log('handleSubmit');
   event.preventDefault();
+  isLoading.value = true;  // Inicia el loading
 
   /*
   const selectedPersonajes = personajesData.value.filter(
@@ -68,34 +71,47 @@ const handleSubmit = async (event) => {
     key => estilos[key]
   );
 
-  const response = await fetch('/api/story', {
-    method: 'POST',
-    headers: {
-      'Content-Type': 'application/json',
-    },
-    body: JSON.stringify({
-      personajes: selectedPersonajes,
-      moralejas: selectedMoralejas,
-      estilos: selectedEstilos
-    }),
-  });
+  try {
+    const response = await fetch('/api/story', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({
+        personajes: selectedPersonajes,
+        moralejas: selectedMoralejas,
+        estilos: selectedEstilos
+      }),
+    });
 
-  if (!response.body) {
-    console.error('No response body');
-    return;
-  }
+    if (!response.body) {
+      console.error('No response body');
+      return;
+    }
 
-  const reader = response.body.getReader();
-  const decoder = new TextDecoder();
+    /*
+    const reader = response.body.getReader();
+    const decoder = new TextDecoder();
 
-  text.value = '';
+    text.value = '';
+    while (true) {
+      const { done, value } = await reader.read();
+      if (done) break;
+      const chunk = decoder.decode(value, { stream: true });
+      console.log('chunk', chunk);
+      text.value += streamDecoder(chunk);
+    }
+    */
 
-  while (true) {
-    const { done, value } = await reader.read();
-    if (done) break;
-    const chunk = decoder.decode(value, { stream: true });
-    console.log('chunk', chunk);
-    text.value += streamDecoder(chunk);
+    text.value = await response.text();
+    // var text = '';
+    // for await (const textPart of response.text()) {
+    //   text += textPart;
+    // }
+  } catch (error) {
+    console.error('Error during fetch:', error);
+  } finally {
+    isLoading.value = false;  // Acaba el loading
   }
 };
 
@@ -107,14 +123,12 @@ const updateName = ( personaje, newName ) => {
     personajesData.value[index].nombre = newName;
   }
 };
-
-
 </script>
 
 <template>
   <div class="max-w-xl mx-auto py-4 px-4">
     <section v-if="!text">
-      <h1 class="pb-6 text-xl font-bold text-white-900 md:text-xl">
+      <h1 class="playwrite pb-6 text-xl font-bold text-white-900 md:text-3xl">
         Buenas noches <em>baby</em>!
       </h1>
       
@@ -139,18 +153,20 @@ const updateName = ( personaje, newName ) => {
       <fieldset class="mb-6 pt-3">
         <legend class="text-slate-200 font-semibold">Estilo</legend>
         <div class="grid grid-cols-3 gap-3">
+          <Checkbox v-model="estilos.verso" id="verso">En Verso</Checkbox>
           <Checkbox v-model="estilos.disney" id="disney">Disney</Checkbox>
           <Checkbox v-model="estilos.larryDavid" id="larryDavid">Larry David</Checkbox>
-          <Checkbox v-model="estilos.verso" id="verso">En Verso</Checkbox>
+          <Checkbox v-model="estilos.friends" id="friends">Friends</Checkbox>
         </div>
       </fieldset>
 
       <hr class="my-5 border-none" />
-      <div class="text-center">
-        <button @click="handleSubmit" class="btn-magic">
-          {{ $t('Haz un cuento') }}!
-        </button>
-      </div>
+      
+      <button @click="handleSubmit" class="btn-magic flex items-center justify-center mx-auto" :disabled="isLoading">
+        <IconMagic class="fill-white w-6 h-6 mr-2" />
+        {{ isLoading ? 'Loading...' : $t('Haz un cuento') + '!' }}
+      </button>
+    
     </section>
     <section id="response" v-if="text">
       <div class="playwrite whitespace-pre-line leading-6 break-words">{{ text }}</div>
@@ -162,3 +178,4 @@ const updateName = ( personaje, newName ) => {
     </section>
   </div>
 </template>
+

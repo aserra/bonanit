@@ -30,7 +30,7 @@ export default defineLazyEventHandler(async () => {
     console.log(`moralejas: ${selectedMoralejas}`);
     console.log(`estilos: ${selectedEstilos}`);
 
-    /*
+    
     const prompt = `
     Cada noche le cuento a mi hija un cuento antes de dormir.
     Escríbeme una historia corta para niños en ${ language }
@@ -47,28 +47,43 @@ export default defineLazyEventHandler(async () => {
     La historia debe ser escrita en un lenguaje amigable y cercano.
     La historia debe ser escrita en un lenguaje que fomente la imaginación y la creatividad.
     `;
-    */
+    
+   /*
     const prompt = `Haz una frase con los siguientes personajes:  ${selectedPersonajes}.
     La moraleja del cuento debe ser sobre: ${selectedMoralejas}.
     El estilo del cuento debe ser similar a: ${selectedEstilos}.
     `;
+    */
 
     // Ask OpenAI for a streaming chat completion given the prompt
-    const result = await streamText({
+    const { textStream } = await streamText({
       model: openai('gpt-3.5-turbo'),
-      system: `You are an author who writes short stories for children in ${language}. 
+      system: `You are an author who writes short stories for children in ${ language }. 
       Don't say greetings, just respond.`,
       prompt: prompt,
       temperature: 0.75,
       frequencyPenalty: 1,
     });
 
+    return new StreamingTextResponse(textStream);
+
     // Convert the response into a friendly text-stream
+    /*
     const stream = result.toAIStream({
       onFinal(_) {},
     });
+    */
 
     // Respond with the stream
-    return new StreamingTextResponse(stream);
+    // return new StreamingTextResponse(stream);
+
+    // const streamingResponse = new StreamingTextResponse(stream)
+    // return await streamingResponse.text()
+    var text = '';
+    for await (const textPart of textStream) {
+      text += textPart;
+    }
+
+    return text;
   });
 });

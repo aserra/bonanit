@@ -36,6 +36,25 @@ const updateName = () => {
   emits('update:name', props.personaje.personaje, newName.value);
   closeDialog();
 };
+
+const generateIaName = async () => {
+  const response = await fetch('/api/name', {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+    },
+    body: JSON.stringify({
+      personaje: props.personaje.personaje,
+    }),
+  });
+
+  if (!response.body) {
+    console.error('No response body');
+    return;
+  }
+
+  newName.value = await response.text();
+};
 </script>
 
 <template>
@@ -66,9 +85,13 @@ const updateName = () => {
     <dialog :id="id" class="border border-white bg-slate-900 p-4 text-white">
       <div class="dialog-content">
         <h3 class="capitalize">{{ personaje.personaje }}:</h3>
-        <input v-model="newName" type="text" class="text-black block mt-4 p-1" />
+        <div class="flex gap-3 items-center justify-center mt-4">
+          <input v-model="newName" type="text" class="block w-full text-black p-1" />
+          <a @click="generateIaName"><IconMagic class="fill-white w-[25px] cursor-pointer" /></a>
+        </div>
+        
         <div class="mt-4">
-          <a @click="updateName" class="flex justify-center px-4 py-2 bg-sky-500 text-white rounded w-full text-center">
+          <a @click="updateName" class="flex justify-center px-4 py-2 bg-sky-500 text-white rounded w-full text-center cursor-pointer">
             <IconSave class="fill-white w-4 h-4" />
           </a>
         </div>
