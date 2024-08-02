@@ -20,7 +20,7 @@ export default defineLazyEventHandler(async () => {
     const language = 'Spanish';
 
     // Construct the prompt using the extracted parameters
-    const selectedPersonajes = personajes.map(p => `${p.nombre} (${p.personaje}, ${p.rol})`).join(', ');
+    const selectedPersonajes = personajes.map(p => `Personaje "${p.personaje}" de nombre "${p.nombre}" con la característica: ${p.rol} `).join(', ');
     const selectedMoralejas = moralejas.join(', ');
     const selectedEstilos = estilos.join(', ');
 

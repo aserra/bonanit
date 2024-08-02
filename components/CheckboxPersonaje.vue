@@ -10,9 +10,11 @@ const props = defineProps({
   personaje: Object
 });
 
-const emits = defineEmits(['update:modelValue', 'update:name']);
+const emits = defineEmits(['update:modelValue', 'update:personaje']);
 const checked = ref(props.modelValue);
 const newName = ref(props.personaje.nombre);
+const newPersonaje = ref(props.personaje.personaje);
+const newRol = ref(props.personaje.rol);
 
 watch(() => props.modelValue, (newValue) => {
   checked.value = newValue;
@@ -32,8 +34,13 @@ const closeDialog = () => {
   dialog.close();
 };
 
-const updateName = () => {
-  emits('update:name', props.personaje.personaje, newName.value);
+const updatePersonaje = () => {
+  emits('update:personaje', {
+    oldPersonaje: props.personaje.personaje,
+    newPersonaje: newPersonaje.value,
+    newName: newName.value,
+    newRol: newRol.value
+  });
   closeDialog();
 };
 
@@ -44,7 +51,7 @@ const generateIaName = async () => {
       'Content-Type': 'application/json',
     },
     body: JSON.stringify({
-      personaje: props.personaje.personaje,
+      personaje: newPersonaje.value,
     }),
   });
 
@@ -84,20 +91,29 @@ const generateIaName = async () => {
 
     <dialog :id="id" class="border border-white bg-slate-900 p-4 text-white">
       <div class="dialog-content">
-        <h3 class="capitalize">{{ personaje.personaje }}:</h3>
-        <div class="flex gap-3 items-center justify-center mt-4">
-          <input v-model="newName" type="text" class="block w-full text-black p-1" />
-          <a @click="generateIaName"><IconMagic class="fill-white w-[25px] cursor-pointer" /></a>
-        </div>
-        
+        <h3 class="capitalize">{{ $t('Modificar') }}:</h3>
         <div class="mt-4">
-          <a @click="updateName" class="flex justify-center px-4 py-2 bg-sky-500 text-white rounded w-full text-center cursor-pointer">
+          <label class="block mb-2 capitalize">{{ $t('personaje') }}:</label>
+          <input v-model="newPersonaje" type="text" class="block w-full text-black p-1 mb-4" />
+        </div>
+        <div class="mt-4">
+          <label class="block mb-2 capitalize">{{ $t('nombre') }}:</label>
+          <div class="flex gap-3 items-center justify-center">
+            <input v-model="newName" type="text" class="block w-full text-black p-1" />
+            <a @click="generateIaName"><IconMagic class="fill-white w-[25px] cursor-pointer" /></a>
+          </div>
+        </div>
+        <div class="mt-4">
+          <label class="block mb-2 capitalize">{{ $t('rol') }}:</label>
+          <input v-model="newRol" type="text" class="block w-full text-black p-1 mb-4" />
+        </div>
+        <div class="mt-4">
+          <a @click="updatePersonaje" class="flex justify-center px-4 py-2 bg-sky-500 text-white rounded w-full text-center cursor-pointer">
             <IconSave class="fill-white w-4 h-4" />
           </a>
         </div>
       </div>
     </dialog>
-
   </div>
 </template>
 

@@ -123,6 +123,46 @@ const updateName = ( personaje, newName ) => {
     personajesData.value[index].nombre = newName;
   }
 };
+
+
+const updatePersonaje = ({ oldPersonaje, newPersonaje, newName, newRol }) => {
+  console.log('updatePersonaje', oldPersonaje, newPersonaje, newName, newRol);
+  const index = personajesData.value.findIndex(p => p.personaje === oldPersonaje);
+  console.log('index', index);
+  if (index !== -1) {
+    personajesData.value[index].personaje = newPersonaje;
+    personajesData.value[index].nombre = newName;
+    personajesData.value[index].rol = newRol;
+    personajes.value[newPersonaje] = personajes.value[oldPersonaje];
+    delete personajes.value[oldPersonaje];
+  }
+};
+
+
+const generateCharacter = async () => {
+  console.log('generateCharacter');
+
+  const response = await fetch('/api/character', {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+    },
+    body: JSON.stringify({
+      charactersExcluded: personajesData.value.map(p => p.personaje),
+    }),
+  });
+
+  if (!response.body) {
+    console.error('No response body');
+    return;
+  }
+
+  const character = await response.json();
+  console.log('character', character);
+
+  // push the new character to the list
+  personajesData.value.push(character);
+};
 </script>
 
 <template>
@@ -135,7 +175,8 @@ const updateName = ( personaje, newName ) => {
       <fieldset class="mb-6 pt-3">
         <legend class="text-slate-200 font-semibold">Personajes</legend>
         <div id="chars__list" class="grid grid-cols-2 md:grid-cols-3 gap-3">
-            <CheckboxPersonaje v-for="personaje in personajesData" :key="personaje.personaje" v-model="personajes[personaje.personaje]" :id="personaje.personaje" :personaje="personaje" @update:name="updateName" />
+            <CheckboxPersonaje v-for="personaje in personajesData" :key="personaje.personaje" v-model="personajes[personaje.personaje]" :id="personaje.personaje" :personaje="personaje" @update:personaje="updatePersonaje" />
+            <button @click="generateCharacter">Generar personaje</button>
         </div>
       </fieldset>
       
