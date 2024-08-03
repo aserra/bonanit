@@ -176,7 +176,10 @@ const generateCharacter = async () => {
         <legend class="text-slate-200 font-semibold">Personajes</legend>
         <div id="chars__list" class="grid grid-cols-2 md:grid-cols-3 gap-3">
             <CheckboxPersonaje v-for="personaje in personajesData" :key="personaje.personaje" v-model="personajes[personaje.personaje]" :id="personaje.personaje" :personaje="personaje" @update:personaje="updatePersonaje" />
-            <button @click="generateCharacter">Generar personaje</button>
+            <button @click="generateCharacter" class="flex gap-3 rounded-md transition duration-300 ease-in-out border border-white text-left px-4 py-2 cursor-pointer items-center">
+              <IconMagic class="fill-white w-6 h-6" />
+              <span>Generar personaje</span>
+            </button>
         </div>
       </fieldset>
       
