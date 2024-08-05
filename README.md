@@ -1,47 +1,37 @@
-# Vercel AI SDK, Nuxt and OpenAI Chat Example
+# Buenas Noches _baby_
 
-This example shows how to use the [Vercel AI SDK](https://sdk.vercel.ai/docs) with [Nuxt](https://nuxt.com/), and [OpenAI](https://openai.com) to create a ChatGPT-like AI-powered streaming chat bot.
+* Utilizando el [Nuxt OpenAI Starter](https://github.com/vercel/ai/tree/main/examples/nuxt-openai)
+* Creado inicialmente para la presentación del [Hackaton Vercel 2024](https://github.com/midudev/hackaton-vercel-2024)
+* Desplegado en: [Buenas Noches _baby_](https://buenasnoches.baby)
 
-## Deploy your own
+## Desarrollo
 
-Deploy the example using [Vercel](https://vercel.com?utm_source=github&utm_medium=readme&utm_campaign=ai-sdk-example):
+Para ejecutar el proyecto localmente necesitas:
+1. Clonar el repositorio.
+2. Registrarte en la [Plataforma de Desarrolladores de OpenAI](https://platform.openai.com/signup).
+3. Ir al [tablero de OpenAI](https://platform.openai.com/account/api-keys) y crear una CLAVE API.
+4. Configurar la variable de entorno requerida por OpenAI con el valor del token como se muestra en [el archivo de ejemplo env](./.env.example), pero en un nuevo archivo llamado `.env`.
+5. Ejecutar `pnpm install` para instalar las dependencias necesarias.
+6. Ejecutar `pnpm dev` para lanzar el servidor de desarrollo.
 
-[![Deploy with Vercel](https://vercel.com/button)](https://vercel.com/new/clone?repository-url=https%3A%2F%2Fgithub.com%2Fvercel%2Fai%2Ftree%2Fmain%2Fexamples%2Fnuxt-openai&env=NUXT_OPENAI_API_KEY&envDescription=OpenAI%20API%20Key&envLink=https%3A%2F%2Fplatform.openai.com%2Faccount%2Fapi-keys&project-name=ai-chat&repository-name=nuxt-ai-chat)
+## Desplegar en Vercel
 
-## How to use
-
-Execute `nuxi` to bootstrap the example:
-
-```bash
-npx nuxi@latest init -t github:vercel/ai/examples/nuxt-openai nuxt-openai
-```
-
-To run the example locally you need to:
-
-1. Sign up at [OpenAI's Developer Platform](https://platform.openai.com/signup).
-2. Go to [OpenAI's dashboard](https://platform.openai.com/account/api-keys) and create an API KEY.
-3. Set the required OpenAI environment variable as the token value as shown [the example env file](./.env.example) but in a new file called `.env`.
-4. `pnpm install` to install the required dependencies.
-5. `pnpm dev` to launch the development server.
-
-## Deploy to Vercel
-
-This example can be directly deployed to Vercel, you can run the following commands:
+Este ejemplo se puede desplegar directamente en Vercel. Puedes ejecutar los siguientes comandos:
 
 ```bash
 pnpm run build
 vercel deploy
 ```
 
-This example is configured to use the `vercel-edge` [[Nitro preset](https://nitro.unjs.io/deploy/providers/vercel#vercel-edge-functions).
-This means that the example will be deployed to Vercel's Edge Network.
-You can use different providers, such as `vercel` by modifying your `nuxt.config.ts` file, or using the `NITRO_PRESET` environment variable.
+Está configurado para usar el `vercel-edge` [[Nitro preset](https://nitro.unjs.io/deploy/providers/vercel#vercel-edge-functions).
+Esto significa que el ejemplo se desplegará en la Red Edge de Vercel.
+Puedes utilizar diferentes proveedores, como `vercel`, modificando tu archivo `nuxt.config.ts` o utilizando la variable de entorno `NITRO_PRESET`.
 
-## Learn More
+## Aprender Más
 
-To learn more about OpenAI, Nuxt, and the Vercel AI SDK take a look at the following resources:
+Para aprender más sobre OpenAI, Nuxt y el SDK de Vercel AI, consulta los siguientes recursos:
 
-- [Vercel AI SDK docs](https://sdk.vercel.ai/docs) - learn mode about the Vercel AI SDK
-- [Vercel AI Playground](https://play.vercel.ai) - compare and tune 20+ AI models side-by-side
-- [OpenAI Documentation](https://platform.openai.com/docs) - learn about OpenAI features and API.
-- [Nuxt Documentation](https://nuxt.com/docs) - learn about Nuxt features and API.
+- [Documentación del SDK de Vercel AI](https://sdk.vercel.ai/docs) - aprende más sobre el SDK de Vercel AI.
+- [Vercel AI Playground](https://play.vercel.ai) - compara y ajusta más de 20 modelos de IA lado a lado.
+- [Documentación de OpenAI](https://platform.openai.com/docs) - aprende sobre las características y API de OpenAI.
+- [Documentación de Nuxt](https://nuxt.com/docs) - aprende sobre las características y API de Nuxt.
